@@ -1,9 +1,11 @@
 package com.fhm.springboot.config;
 
+import com.fhm.springboot.component.LoginHandlerInterceptor;
 import com.fhm.springboot.component.MyLocaleResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -27,9 +29,16 @@ public class MyMVCConfig extends WebMvcConfigurerAdapter{
                 //super.addViewControllers(registry);
                 registry.addViewController("/").setViewName("login");
                 registry.addViewController("/index.html").setViewName("login");
+                registry.addViewController("main.html").setViewName("/dashboard");
             }
         };
         return adapter;
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        //super.addInterceptors(registry);
+        registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**").excludePathPatterns("/","/index.html","/user/login");
     }
 
     @Bean
