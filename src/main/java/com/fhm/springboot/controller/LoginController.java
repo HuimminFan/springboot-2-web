@@ -21,7 +21,9 @@ public class LoginController {
         if(!StringUtils.isEmpty(username) && "111111".equals(password)) {
             session.setAttribute("loginUser",username);
             return "redirect:/main.html";
+//            return "dashboard";
         }
+
         else {
             map.put("msg","用户名或密码错误");
             return "login";
